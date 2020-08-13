@@ -7,7 +7,7 @@
     </nav-top>
 
     <swiper>
-      <swiper-item v-for="item in banner" :key="item.id">
+      <swiper-item v-for="item in banner" :key="item.acm">
         <a :href="item.link"><img :src="item.image"></a>
       </swiper-item>
     </swiper>
