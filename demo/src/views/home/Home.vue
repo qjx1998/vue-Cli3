@@ -6,16 +6,22 @@
       <div slot="right">aaaa</div>
     </nav-top>
 
+    <swiper>
+      <swiper-item v-for="item in banner" :key="item.id">
+        <a :href="item.link"><img :src="item.image"></a>
+      </swiper-item>
+    </swiper>
   </div>
 </template>
 
 <script>
 import NavTop from 'components/common/navbar/NavTop'
 import { getHomeMultidata } from 'network/data'
+import { Swiper, SwiperItem } from 'components/common/swiper/index'
 
 export default {
   name: 'Home',
-  components: { NavTop },
+  components: { NavTop, Swiper, SwiperItem },
   data(){
     return{
       banner: [],
@@ -29,7 +35,7 @@ export default {
   created(){
     getHomeMultidata().then(res => {
       res = res.data;
-      // console.log(res)
+      console.log(res)
       if(res){
         this.banner = res.banner.list;
         this.recommends = res.recommends;
