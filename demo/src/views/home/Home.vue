@@ -1,27 +1,37 @@
 <template>
   <div class="home">
-    <nav-top class="home-nav">
-      <div slot="left">哈哈</div>
-      <div slot="center">购物车</div>
-      <div slot="right">aaaa</div>
-    </nav-top>
+    <nav-top class="home-nav"><div slot="center">购物车</div></nav-top>
+    <!-- 轮播图 -->
+    <home-swiper :banner="banner"></home-swiper>
 
-    <swiper>
-      <swiper-item v-for="item in banner" :key="item.acm">
-        <a :href="item.link"><img :src="item.image"></a>
-      </swiper-item>
-    </swiper>
+    <recommend-view :recommends="recommends"></recommend-view>
+
+    <feature-view />
+
+    <tab-control :titles="['流行','新款','精选']"></tab-control>
+
+    <div class="zhanwei"></div>
+
+
+ 
   </div>
 </template>
 
 <script>
+import HomeSwiper from './childhome/HomeSwiper'
+import RecommendView from './childhome/RecommendView'
+import FeatureView from './childhome/FeatureView'
+
 import NavTop from 'components/common/navbar/NavTop'
+import TabControl from 'components/content/tabControl/TabControl'
+
+
 import { getHomeMultidata } from 'network/data'
-import { Swiper, SwiperItem } from 'components/common/swiper/index'
+
 
 export default {
   name: 'Home',
-  components: { NavTop, Swiper, SwiperItem },
+  components: { HomeSwiper,RecommendView,FeatureView,NavTop,TabControl },
   data(){
     return{
       banner: [],
@@ -30,7 +40,6 @@ export default {
     }
   },
   methods: {
-
   },
   created(){
     getHomeMultidata().then(res => {
@@ -38,7 +47,7 @@ export default {
       console.log(res)
       if(res){
         this.banner = res.banner.list;
-        this.recommends = res.recommends;
+        this.recommends = res.recommend.list;
       }
       
     })
@@ -50,5 +59,9 @@ export default {
   .home-nav{
     background-color: var(--color-tint);
     color: #fff;
+  }
+  .zhanwei{
+    height: 150px;
+    width: 100%;
   }
 </style>

@@ -39,6 +39,10 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+  .wrapper{
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+  }
 </style>
