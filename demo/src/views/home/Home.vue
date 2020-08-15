@@ -2,7 +2,7 @@
   <div class="home">
     <nav-top class="home-nav"><div slot="center">购物车</div></nav-top>
 
-    <scroll ref="scroll">
+    <scroll ref="scroll" :probe-type="3" @isShow="isShow">
       
       <home-swiper :banner="banner" class="home-swiper"></home-swiper>
 
@@ -16,7 +16,7 @@
 
     </scroll> 
 
-    <back-top class="get-back" @click.native="backUp"></back-top> 
+    <back-top class="get-back" @click.native="backUp" v-if="isShows"></back-top> 
 
   </div>
 </template>
@@ -50,7 +50,8 @@ export default {
         'new': {page: 0,list: []},
         'sell': {page: 0,list: []}
       },
-      currentType: 'pop'
+      currentType: 'pop',
+      isShows: false
     }
   },
   methods: {
@@ -70,8 +71,7 @@ export default {
       getHomeGoods(type, page).then(res => {
         console.log(res)
           this.goods[type].list.push(...res.data.list);
-          this.goods[type].page ++;
-       
+          this.goods[type].page ++;     
       })
     },
     // 事件监听
@@ -92,6 +92,10 @@ export default {
     },
     backUp(){
       this.$refs.scroll.scrollTo(0,0,1000);
+    },
+    isShow(dex){
+    //  console.log(dex)
+     this.isShows = dex
     }
   },
   computed:{

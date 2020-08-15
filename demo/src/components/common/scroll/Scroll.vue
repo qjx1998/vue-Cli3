@@ -12,6 +12,12 @@ import BScroll from "better-scroll";
 
 export default {
   name: 'Scroll',
+  props: {
+    probeType: {
+      type: Number,
+      default: 0
+    }
+  },
   data(){
     return{
         scroll: null
@@ -22,10 +28,18 @@ export default {
       this.scroll.scrollTo(x, y, time);    
     }
   },
-  mounted(){
+  mounted(){ 
     this.scroll = new BScroll(this.$refs.wrappers,{
-        probeType: 3,
+        probeType: this.probeType,
         click: true
+    })
+
+    this.scroll.on('scroll', pos =>{   
+      if(Math.abs(pos.y) > 2000){
+        this.$emit('isShow',true);
+      }else{
+        this.$emit('isShow',false);
+      }
     })
   }
 }
