@@ -27,5 +27,6 @@ export default {
 <style scoped>
   .scroll{
       margin-top: 44px;
+      overflow: hidden;
   }
 </style>

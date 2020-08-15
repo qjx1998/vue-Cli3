@@ -24,7 +24,8 @@ export default {
   },
   methods: {
     ticket(dex){
-      this.temp = dex
+      this.temp = dex;
+      this.$emit('tabClick',this.temp);
     }
   }
 }
@@ -32,10 +33,13 @@ export default {
 
 <style scoped>
   .control{
+    position: sticky;
+    top: 44px;
     display: flex;
     text-align: center;
     height: 40px;
     line-height: 40px;
+    background: #fff;
   }
   .control>div{
     flex: 1;

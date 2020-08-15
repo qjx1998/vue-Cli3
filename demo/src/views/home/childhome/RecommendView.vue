@@ -28,6 +28,7 @@ export default {
     display: flex;
     padding-top: 15px;
     padding-bottom: 15px;
+    background: #fff;
 }
 .commend div{
     flex: 1;
