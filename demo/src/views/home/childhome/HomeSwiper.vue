@@ -2,7 +2,7 @@
   <div class="scroll">
      <swiper>
       <swiper-item v-for="item in banner" :key="item.acm">
-        <a :href="item.link"><img :src="item.image"></a>
+        <a :href="item.link"><img :src="item.image" @load="imageLoad"></a>
       </swiper-item>
     </swiper>
   </div>  
@@ -20,7 +20,20 @@ export default {
           }
       }
   },
-   components: {Swiper, SwiperItem }
+  components: {Swiper, SwiperItem },
+  data(){
+    return{
+      isLoad: true
+    }
+  },
+  methods: {
+    imageLoad(){
+      if(this.isLoad){
+        this.$emit('swiperImageLoad');
+        this.isLoad = false;
+      }
+    }
+  }
 }
 </script>
 

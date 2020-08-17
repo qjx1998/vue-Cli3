@@ -16,22 +16,36 @@ export default {
     probeType: {
       type: Number,
       default: 0
+    },
+    pullUpLoad: {
+      type: Boolean,
+      default: false
     }
   },
   data(){
     return{
-        scroll: null
+      scroll: null
     }
   },
   methods: {
     scrollTo(x, y, time=1000){
       this.scroll.scrollTo(x, y, time);    
+    },
+    finishPullUp(){
+      this.scroll.finishPullUp();
+    },
+    refresh(){
+      this.scroll.refresh();
+    },
+    scrollY(){
+      return this.scroll ? this.scroll : 0;
     }
   },
   mounted(){ 
     this.scroll = new BScroll(this.$refs.wrappers,{
         probeType: this.probeType,
-        click: true
+        click: true,
+        pullUpLoad: this.pullUpLoad
     })
 
     this.scroll.on('scroll', pos =>{   
@@ -40,6 +54,14 @@ export default {
       }else{
         this.$emit('isShow',false);
       }
+
+      this.$emit('scrollHigh',pos.y)
+
+      // if(Math.abs(pos.y) > )
+    })
+
+    this.scroll.on('pullingUp',() => {
+      this.$emit('pullingUp');
     })
   }
 }

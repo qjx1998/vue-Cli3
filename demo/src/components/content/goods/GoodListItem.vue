@@ -1,16 +1,13 @@
 <template>
-  <div class="goods-item">
-    <a :href="goodList.link">
-        <img :src="goodList.show.img" alt="">
-        <div class="good-export">
-            <p class="good-title">{{ goodList.title }}</p>
-            <div class="star">
-                <span class="price">{{ goodList.price }}</span>
-                <span class="collect">{{ goodList.cfav }}</span>
-            </div>
-            
-        </div>
-    </a>
+  <div class="goods-item" @click="tickDetail">
+    <img :src="goodList.show.img" @load="imageLoad">
+    <div class="good-export">
+        <p class="good-title">{{ goodList.title }}</p>
+        <div class="star">
+            <span class="price">{{ goodList.price }}</span>
+            <span class="collect">{{ goodList.cfav }}</span>
+        </div>       
+    </div>
   </div>
 </template>
 
@@ -24,6 +21,15 @@ export default {
             return {}
         }
       }
+  },
+  methods: {
+    imageLoad(){
+      this.$bus.$emit('itemImageLoad');
+    },
+    tickDetail(){
+      this.$router.push({path: `/Detail/${this.goodList.iid}`});
+    
+    }
   }
 }
 </script>
