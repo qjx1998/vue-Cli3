@@ -1,7 +1,4 @@
 <template>
-<<<<<<< HEAD
-  <div></div>
-=======
   <div>
       <div class="control" v-if="Object.keys(detailMes)">
           <div class="de-title">{{ detailMes.title }}</div>
@@ -19,26 +16,12 @@
       </div>
       <div v-else>商品已下架</div>
   </div>
->>>>>>> b214e257ea3377f8622302eb5164f8f718f77574
 </template>
 
 <script>
 export default {
   name: "DetailMes",
   props: {
-<<<<<<< HEAD
-      goods: {
-          type: Object,
-          default(){
-            return {}
-          }
-      }
-  }
-};
-</script>
-<style scoped>
-
-=======
     detailMes: {
         type: Object,
         default(){
@@ -114,5 +97,4 @@ export default {
         width: 100%;
         background: #E6E6FA;
     }
->>>>>>> b214e257ea3377f8622302eb5164f8f718f77574
 </style>

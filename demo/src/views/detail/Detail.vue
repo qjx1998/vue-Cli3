@@ -1,14 +1,6 @@
 <template>
   <div id="detail">
       <child-detail />
-<<<<<<< HEAD
-
-      <detail-swiper
-       :detailSwipers="detailSwipers"
-       :goods="goods"  />
-
-
-=======
     <scroll class="contain" ref="scroll" @isShow="isShow" :probe-type="3" :pull-up-load="true">
       <detail-swiper :detailSwipers="detailSwipers" />
 
@@ -22,42 +14,10 @@
     </scroll>
 
     <back-top v-if="isShows" @click.native="scrollTop" />
->>>>>>> b214e257ea3377f8622302eb5164f8f718f77574
   </div>
 </template>
 
 <script>
-<<<<<<< HEAD
-import ChildDetail from './childDetail/ChildDetail'
-import DetailSwiper from './childDetail/DetailSwiper'
-
-import { getDetail,GoodInfo } from 'network/details'
-
-export default {
-  name: "Detail",
-  components: { ChildDetail,DetailSwiper },
-  data(){
-    return{
-      iid: '',
-      detailSwipers: [],
-      goods: {}
-    }
-  },
-  mounted(){
-    this.iid = this.$route.params.iid;
-    this.getContDetail(this.iid);
-  },
-  methods: {
-    getContDetail(dex){
-        getDetail(dex).then(res =>{
-          console.log(res);
-          const data = res.result;
-        //   顶部轮播数据
-          this.detailSwipers = data.itemInfo.topImages;
-        //   获取商品信息
-          this.goods = new GoodInfo(data.itemInfo, data.columns, data.shopInfo.services);
-        })
-=======
   import ChildDetail from './childDetail/ChildDetail'
   import DetailSwiper from './childDetail/DetailSwiper'
   import DetailMes from './childDetail/DetailMes'
@@ -114,7 +74,6 @@ export default {
       isShow(dex){
         this.isShows = dex;
       }
->>>>>>> b214e257ea3377f8622302eb5164f8f718f77574
     }
   }
 </script>
