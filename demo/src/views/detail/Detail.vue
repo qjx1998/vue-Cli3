@@ -1,37 +1,52 @@
 <template>
   <div>
       <child-detail />
-
+    <scroll>
       <detail-swiper :detailSwipers="detailSwipers" />
+
+      <detail-mes :detailMes="detailMes" />
+
+      <shop-mes :shop="shop" />
+    </scroll>
   </div>
 </template>
 
 <script>
 import ChildDetail from './childDetail/ChildDetail'
 import DetailSwiper from './childDetail/DetailSwiper'
+import DetailMes from './childDetail/DetailMes'
+import ShopMes from './childDetail/ShopMes'
 
-import { getDetail } from 'network/details'
+import Scroll from 'components/common/scroll/Scroll'
+
+import { getDetail,Goods,Shop } from 'network/details'
 
 export default {
   name: "Detail",
-  components: { ChildDetail,DetailSwiper },
+  components: { ChildDetail,DetailSwiper,DetailMes,ShopMes,Scroll },
   data(){
     return{
       iid: '',
-      detailSwipers: []
+      detailSwipers: [],
+      detailMes: {},
+      shop: {}
     }
   },
-  activated(){
+  created(){
     this.iid = this.$route.params.iid;
-    console.log(this.iid)
     this.getContDetail(this.iid);
   },
   methods: {
     getContDetail(dex){
         getDetail(dex).then(res =>{
         //   console.log(res.result.itemInfo.topImages);
+        let data = res.result;
         //   顶部轮播数据
-          this.detailSwipers = res.result.itemInfo.topImages
+        this.detailSwipers = data.itemInfo.topImages
+        //   商品详细信息
+        this.detailMes = new Goods(data.itemInfo, data.columns, data.shopInfo.services);
+        //   创造店铺信息
+        this.shop = new Shop(data.shopInfo);
         })
     }
   }
