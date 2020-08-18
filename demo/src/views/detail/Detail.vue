@@ -2,7 +2,11 @@
   <div>
       <child-detail />
 
-      <detail-swiper :detailSwipers="detailSwipers" />
+      <detail-swiper
+       :detailSwipers="detailSwipers"
+       :goods="goods"  />
+
+
   </div>
 </template>
 
@@ -10,7 +14,7 @@
 import ChildDetail from './childDetail/ChildDetail'
 import DetailSwiper from './childDetail/DetailSwiper'
 
-import { getDetail } from 'network/details'
+import { getDetail,GoodInfo } from 'network/details'
 
 export default {
   name: "Detail",
@@ -18,20 +22,23 @@ export default {
   data(){
     return{
       iid: '',
-      detailSwipers: []
+      detailSwipers: [],
+      goods: {}
     }
   },
-  activated(){
+  mounted(){
     this.iid = this.$route.params.iid;
-    console.log(this.iid)
     this.getContDetail(this.iid);
   },
   methods: {
     getContDetail(dex){
         getDetail(dex).then(res =>{
-        //   console.log(res.result.itemInfo.topImages);
+          console.log(res);
+          const data = res.result;
         //   顶部轮播数据
-          this.detailSwipers = res.result.itemInfo.topImages
+          this.detailSwipers = data.itemInfo.topImages;
+        //   获取商品信息
+          this.goods = new GoodInfo(data.itemInfo, data.columns, data.shopInfo.services);
         })
     }
   }
