@@ -51,7 +51,7 @@
     methods: {
       getContDetail(dex){
           getDetail(dex).then(res =>{
-          //   console.log(res.result.itemInfo.topImages);
+            console.log(res.result);
           let data = res.result;
           //   顶部轮播数据
           this.detailSwipers = data.itemInfo.topImages
