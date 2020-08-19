@@ -29,7 +29,6 @@ export default {
       if(++this.count === this.imgLength){
         this.$emit('imgLoad');
       }
-      
     }  
   },
   computed: {

@@ -2,6 +2,7 @@
   <div id="detail">
       <child-detail />
     <scroll class="contain" ref="scroll" @isShow="isShow" :probe-type="3" :pull-up-load="true">
+      
       <detail-swiper :detailSwipers="detailSwipers" />
 
       <detail-mes :detailMes="detailMes" />
@@ -11,6 +12,9 @@
       <detail-goods-info :detailInfo="detailInfo" @imgLoad="imgLoad" />
 
       <detail-good-params :GoodsParam="GoodsParam" />
+
+      <DetailCommon :common="common" />
+
     </scroll>
 
     <back-top v-if="isShows" @click.native="scrollTop" />
@@ -24,7 +28,9 @@
   import ShopMes from './childDetail/ShopMes'
   import DetailGoodsInfo from './childDetail/DetailGoodsInfo'
   import DetailGoodParams from './childDetail/DetailGoodParams'
+  import DetailCommon from './childDetail/DetailCommon'
   import BackTop from 'components/content/backTop/BackTop' 
+
 
   import Scroll from 'components/common/scroll/Scroll'
 
@@ -32,7 +38,7 @@
 
   export default {
     name: "Detail",
-    components: { ChildDetail,DetailSwiper,DetailMes,ShopMes,DetailGoodsInfo,DetailGoodParams,Scroll,BackTop },
+    components: { ChildDetail,DetailSwiper,DetailMes,ShopMes,DetailGoodsInfo,DetailGoodParams,Scroll,DetailCommon,BackTop },
     data(){
       return{
         iid: '',
@@ -41,6 +47,7 @@
         shop: {},
         detailInfo: {},
         GoodsParam: {},
+        common: {},
         isShows: false
       }
     },
@@ -51,7 +58,7 @@
     methods: {
       getContDetail(dex){
           getDetail(dex).then(res =>{
-            console.log(res.result);
+            
           let data = res.result;
           //   顶部轮播数据
           this.detailSwipers = data.itemInfo.topImages
@@ -63,6 +70,11 @@
           this.detailInfo = data.detailInfo;
           //   获取参数信息
           this.GoodsParam = new GoodsParam(data.itemParams.info, data.itemParams.rule);
+
+          //   获取评论信息
+          this.common = data.rate.cRate === 0 ? {} : data.rate.list[0];
+        
+          
           })
       },
       imgLoad(){
