@@ -1,6 +1,6 @@
 <template>
   <div class="goods-item" @click="tickDetail">
-    <img :src="goodList.show.img" @load="imageLoad">
+    <img :src="goodList.show ? goodList.show.img : goodList.image" @load="imageLoad">
     <div class="good-export">
         <p class="good-title">{{ goodList.title }}</p>
         <div class="star">

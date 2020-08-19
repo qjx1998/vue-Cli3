@@ -62,7 +62,8 @@ export default {
       isShows: false,
       tabOffset: null,
       isTabFixed: false,
-      saveY: 0
+      saveY: 0,
+      itemImgList: null
     }
   },
   methods: {
@@ -109,7 +110,6 @@ export default {
         this.$refs.tabControl2.temp = index;
       }
       
-      console.log(this.$refs)
     
     },
     backUp(){
@@ -151,9 +151,11 @@ export default {
   mounted(){
     // 图片加载时间监听
     const refresh = debounce(this.$refs.scroll.refresh,100);
-    this.$bus.$on('itemImageLoad', () => {
+
+    this.itemImgList = () => {
       refresh();
-    })
+    }
+    this.$bus.$on('itemImageLoad', this.itemImgList )
   },
   activated(){
     this.$refs.scroll.scrollTo(0, -this.saveY,0);
@@ -161,6 +163,8 @@ export default {
   },
   deactivated(){
     this.saveY = this.$refs.scroll.scrollY();
+
+    this.$bus.$off('itemImageLoad',this.itemImgList);
   }
 }
 </script>

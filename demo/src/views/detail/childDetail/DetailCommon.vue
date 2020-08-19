@@ -12,7 +12,7 @@
         <span>{{ uname }}</span>
     </div>
     <div class="info-detail">
-        <p>{{ common.content }}</p>
+        <p class="common-text">{{ common.content }}</p>
         <div class="info-other">
             <span class="date">{{ common.created | timeChange }}</span>
             <span>{{ common.style }}</span>
@@ -26,7 +26,7 @@
 
 <script>
 
-// import { formatDate } from 'common/utils'
+import { formatDate } from 'common/utils'
 export default {
   name: "DetailCommon",
   props: {
@@ -44,32 +44,7 @@ export default {
     }
   },
   methods: {
-    formatDate(date, fmt) {
-        //   1.获取年份 
-        if (/(y+)/.test(fmt)) {
-            fmt = fmt.replace(RegExp.$1, (date.getFullYear() + '').substr(4 - RegExp.$1.length));
-        }
-
-        // 2.获取
-        let o = {
-            'M+': date.getMonth() + 1,
-            'd+': date.getDate(),
-            'h+': date.getHours(),
-            'm+': date.getMinutes(),
-            's+': date.getSeconds()
-        };
-        for (let k in o) {
-            if (new RegExp(`(${k})`).test(fmt)) {
-                let str = o[k] + '';
-                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length === 1) ? str : this.padLeftZero(str));
-            }
-        }
-        return fmt;
-        },
-
-        padLeftZero(str) {
-          return ('00' + str).substr(str.length);
-        }
+    
   },
   created(){
     if(this.common.user){
@@ -91,7 +66,7 @@ export default {
 
         const time = new Date(dexs * 1000);
 
-        return this.formatDate(time,'yyyy-MM-dd hh:mm:ss')
+        return formatDate(time,'yyyy-MM-dd hh:mm:ss')
 
       }
   }
@@ -137,10 +112,14 @@ export default {
   }
   .showImg{
       height: 80px;
+      margin-right: 10px;
   }
   .info-imgs{
       width: 90%;
       margin: auto;
       margin-top: 10px;
+  }
+  .common-text{
+    line-height: 20px;
   }
 </style>

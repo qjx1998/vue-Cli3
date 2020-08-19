@@ -15,6 +15,12 @@
 
       <DetailCommon :common="common" />
 
+      <div class="zhanwei"></div>
+
+      <good-list :goods="reCommonent">
+        <good-list-item />
+      </good-list>
+
     </scroll>
 
     <back-top v-if="isShows" @click.native="scrollTop" />
@@ -30,15 +36,18 @@
   import DetailGoodParams from './childDetail/DetailGoodParams'
   import DetailCommon from './childDetail/DetailCommon'
   import BackTop from 'components/content/backTop/BackTop' 
+  import GoodList from 'components/content/goods/GoodList'
+  import GoodListItem from 'components/content/goods/GoodListItem'
+  import { debounce } from 'common/utils'
 
 
   import Scroll from 'components/common/scroll/Scroll'
 
-  import { getDetail,Goods,Shop,GoodsParam } from 'network/details'
+  import { getDetail,getRecommend,Goods,Shop,GoodsParam } from 'network/details'
 
   export default {
     name: "Detail",
-    components: { ChildDetail,DetailSwiper,DetailMes,ShopMes,DetailGoodsInfo,DetailGoodParams,Scroll,DetailCommon,BackTop },
+    components: { ChildDetail,DetailSwiper,DetailMes,ShopMes,DetailGoodsInfo,DetailGoodParams,Scroll,DetailCommon,BackTop,GoodList,GoodListItem },
     data(){
       return{
         iid: '',
@@ -48,12 +57,27 @@
         detailInfo: {},
         GoodsParam: {},
         common: {},
-        isShows: false
+        reCommonent: [],
+        isShows: false,
+        itemImgList: null
       }
     },
     created(){
       this.iid = this.$route.params.iid;
       this.getContDetail(this.iid);
+      this.getRecommends();
+    },
+    mounted() {
+      // 图片加载时间监听
+      const refresh = debounce(this.$refs.scroll.refresh,100);
+
+      this.itemImgList = () => {
+        refresh();
+      }
+      this.$bus.$on('itemImageLoad', this.itemImgList ); 
+    },
+    destroyed() {
+      this.$bus.$off('itemImageLoad', this.itemImgList)
     },
     methods: {
       getContDetail(dex){
@@ -77,6 +101,12 @@
           
           })
       },
+      getRecommends(){
+        getRecommend().then( res => {
+          console.log(res)
+          this.reCommonent = res.data.list;
+        })
+      },
       imgLoad(){
         this.$refs.scroll.refresh();
       },
@@ -99,5 +129,11 @@
   }
   .contain{
     height: calc(100% - 44px);
+  }
+  .zhanwei{
+    margin: 5px auto 5px auto;
+    width: 96%;
+    height: 4px;
+    background: #E6E6FA;
   }
 </style>
