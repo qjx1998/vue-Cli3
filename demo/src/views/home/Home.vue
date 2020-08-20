@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <nav-top class="home-nav"><div slot="center">购物车</div></nav-top>
-    <tab-control :titles="['流行','新款','精选']" class="tab-control" @tabClick="tabClick" ref="tabControl1" v-if="isTabFixed"></tab-control>
+    <tab-control :titles="['流行','新款','精选']" class="tab-control" @tabClick="tabClicks" ref="tabControl1" v-show="isTabFixed"></tab-control>
     <scroll
       ref="scroll"
       :probe-type="3"
@@ -16,7 +16,7 @@
 
       <feature-view />
 
-      <tab-control :titles="['流行','新款','精选']" @tabClick="tabClick" ref="tabControl2" v-if="!isTabFixed"></tab-control>
+      <tab-control :titles="['流行','新款','精选']" @tabClick="tabClicks" ref="tabControl2" v-show="!isTabFixed"></tab-control>
 
       <good-list :goods="showGoods" class="good-list"></good-list>
 
@@ -97,7 +97,7 @@ export default {
       })
     },
     // 事件监听
-    tabClick(index){
+    tabClicks(index){
       switch(index){
         case 0:
           this.currentType = 'pop';
@@ -112,12 +112,8 @@ export default {
           this.currentType = 'pop';
       }
 
-      if(this.$refs.tabControl1){
-        this.$refs.tabControl1.temp = index;
-      }else if(this.$refs.tabControl2){
-        this.$refs.tabControl2.temp = index;
-      }
-      
+      this.$refs.tabControl1.temp = index;
+      this.$refs.tabControl2.temp = index;
     
     },
     backUp(){
