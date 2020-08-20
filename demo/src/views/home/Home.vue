@@ -42,13 +42,22 @@
 
 
     import { getHomeMultidata,getHomeGoods } from 'network/data'
-    import { debounce } from 'common/utils'
+    import { itemListenerMixin } from 'common/mixin'
 
 
 
 export default {
   name: 'Home',
-  components: { HomeSwiper,RecommendView,FeatureView,NavTop,TabControl,GoodList,Scroll,BackTop },
+  components: { HomeSwiper,
+                RecommendView,
+                FeatureView,
+                NavTop,
+                TabControl,
+                GoodList,
+                Scroll,
+                BackTop 
+              },
+  mixins: [ itemListenerMixin ],
   data(){
     return{
       banner: [],
@@ -62,8 +71,7 @@ export default {
       isShows: false,
       tabOffset: null,
       isTabFixed: false,
-      saveY: 0,
-      itemImgList: null
+      saveY: 0
     }
   },
   methods: {
@@ -147,15 +155,6 @@ export default {
 
     this.getGoods('sell');
   
-  },
-  mounted(){
-    // 图片加载时间监听
-    const refresh = debounce(this.$refs.scroll.refresh,100);
-
-    this.itemImgList = () => {
-      refresh();
-    }
-    this.$bus.$on('itemImageLoad', this.itemImgList )
   },
   activated(){
     this.$refs.scroll.scrollTo(0, -this.saveY,0);

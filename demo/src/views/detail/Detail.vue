@@ -38,16 +38,28 @@
   import BackTop from 'components/content/backTop/BackTop' 
   import GoodList from 'components/content/goods/GoodList'
   import GoodListItem from 'components/content/goods/GoodListItem'
-  import { debounce } from 'common/utils'
 
 
   import Scroll from 'components/common/scroll/Scroll'
 
   import { getDetail,getRecommend,Goods,Shop,GoodsParam } from 'network/details'
+  import { itemListenerMixin } from 'common/mixin'
 
   export default {
     name: "Detail",
-    components: { ChildDetail,DetailSwiper,DetailMes,ShopMes,DetailGoodsInfo,DetailGoodParams,Scroll,DetailCommon,BackTop,GoodList,GoodListItem },
+    components: { ChildDetail,
+                  DetailSwiper,
+                  DetailMes,
+                  ShopMes,
+                  DetailGoodsInfo,
+                  DetailGoodParams,
+                  Scroll,
+                  DetailCommon,
+                  BackTop,
+                  GoodList,
+                  GoodListItem 
+                },
+    mixins: [ itemListenerMixin ],
     data(){
       return{
         iid: '',
@@ -58,23 +70,13 @@
         GoodsParam: {},
         common: {},
         reCommonent: [],
-        isShows: false,
-        itemImgList: null
+        isShows: false
       }
     },
     created(){
       this.iid = this.$route.params.iid;
       this.getContDetail(this.iid);
       this.getRecommends();
-    },
-    mounted() {
-      // 图片加载时间监听
-      const refresh = debounce(this.$refs.scroll.refresh,100);
-
-      this.itemImgList = () => {
-        refresh();
-      }
-      this.$bus.$on('itemImageLoad', this.itemImgList ); 
     },
     destroyed() {
       this.$bus.$off('itemImageLoad', this.itemImgList)
