@@ -52,8 +52,8 @@ export default {
     font-size: 13px;
   }
   .infos{
-    height: 50px;
     padding-top: 15px;
+    padding-bottom: 15px;
     width: 100%;
     border-bottom: 1px solid #ccc;
   }

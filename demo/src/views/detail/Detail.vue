@@ -1,7 +1,11 @@
 <template>
   <div id="detail">
-      <child-detail />
-    <scroll class="contain" ref="scroll" @isShow="isShow" :probe-type="3" :pull-up-load="true">
+      <child-detail @getDex="getDex" ref="detailTops" />
+    <scroll class="contain" ref="scroll"
+     @isShow="isShow" 
+     :probe-type="3" 
+     :pull-up-load="true"
+      @scrollHigh="contScroll">
       
       <detail-swiper :detailSwipers="detailSwipers" />
 
@@ -11,13 +15,13 @@
 
       <detail-goods-info :detailInfo="detailInfo" @imgLoad="imgLoad" />
 
-      <detail-good-params :GoodsParam="GoodsParam" />
+      <detail-good-params :GoodsParam="GoodsParam" ref="goodsParam" />
 
-      <DetailCommon :common="common" />
+      <DetailCommon :common="common" ref="common" />
 
       <div class="zhanwei"></div>
 
-      <good-list :goods="reCommonent">
+      <good-list :goods="reCommonent" ref="goodList">
         <good-list-item />
       </good-list>
 
@@ -70,13 +74,16 @@
         GoodsParam: {},
         common: {},
         reCommonent: [],
-        isShows: false
+        isShows: false,
+        themeTops: [],
+        getThemeTop: null
       }
     },
     created(){
       this.iid = this.$route.params.iid;
       this.getContDetail(this.iid);
       this.getRecommends();
+      
     },
     destroyed() {
       this.$bus.$off('itemImageLoad', this.itemImgList)
@@ -85,40 +92,56 @@
       getContDetail(dex){
           getDetail(dex).then(res =>{
             
-          let data = res.result;
-          //   顶部轮播数据
-          this.detailSwipers = data.itemInfo.topImages
-          //   商品详细信息
-          this.detailMes = new Goods(data.itemInfo, data.columns, data.shopInfo.services);
-          //   创造店铺信息
-          this.shop = new Shop(data.shopInfo);
-          //   商品详情数据
-          this.detailInfo = data.detailInfo;
-          //   获取参数信息
-          this.GoodsParam = new GoodsParam(data.itemParams.info, data.itemParams.rule);
+            let data = res.result;
+            //   顶部轮播数据
+            this.detailSwipers = data.itemInfo.topImages
+            //   商品详细信息
+            this.detailMes = new Goods(data.itemInfo, data.columns, data.shopInfo.services);
+            //   创造店铺信息
+            this.shop = new Shop(data.shopInfo);
+            //   商品详情数据
+            this.detailInfo = data.detailInfo;
+            //   获取参数信息
+            this.GoodsParam = new GoodsParam(data.itemParams.info, data.itemParams.rule);
 
-          //   获取评论信息
-          this.common = data.rate.cRate === 0 ? {} : data.rate.list[0];
-        
-          
+            //   获取评论信息
+            this.common = data.rate.cRate === 0 ? {} : data.rate.list[0];
+                 
           })
+
       },
       getRecommends(){
         getRecommend().then( res => {
-          console.log(res)
           this.reCommonent = res.data.list;
         })
       },
       imgLoad(){
         this.$refs.scroll.refresh();
+        this.getThemeTop();
+        
       },
       scrollTop(){
         this.$refs.scroll.scrollTo(0,0);
       },
       isShow(dex){
         this.isShows = dex;
+      },
+      getDex(dex){
+       this.$refs.scroll.scrollTo(0,-this.themeTops[dex],2000);
+    },
+    contScroll(dex){
+      if(Math.abs(dex) < this.$refs.goodsParam.$el.offsetTop){
+        this.$refs.detailTops.currentIndex = 0;
+      }else if(Math.abs(dex) > this.$refs.goodsParam.$el.offsetTop && Math.abs(dex) < this.$refs.common.$el.offsetTop){
+        this.$refs.detailTops.currentIndex = 1;
+      }else if(Math.abs(dex) < this.$refs.goodList.$el.offsetTop && Math.abs(dex) > this.$refs.common.$el.offsetTop){
+        this.$refs.detailTops.currentIndex = 2;
+      }else{
+        this.$refs.detailTops.currentIndex = 3;
       }
     }
+    }
+    
   }
 </script>
 

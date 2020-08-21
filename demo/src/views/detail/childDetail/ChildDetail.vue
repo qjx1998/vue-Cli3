@@ -25,6 +25,7 @@ export default {
   methods:{
     active(dex){
       this.currentIndex = dex
+      this.$emit('getDex',dex);
     },
     returns(){
         this.$router.go(-1);
