@@ -130,16 +130,16 @@
        this.$refs.scroll.scrollTo(0,-this.themeTops[dex],2000);
     },
     contScroll(dex){
-      if(Math.abs(dex) < this.$refs.goodsParam.$el.offsetTop){
+      if(Math.abs(dex) < this.themeTops[1]){
         this.$refs.detailTops.currentIndex = 0;
-      }else if(Math.abs(dex) > this.$refs.goodsParam.$el.offsetTop && Math.abs(dex) < this.$refs.common.$el.offsetTop){
+      }else if(Math.abs(dex) >= this.themeTops[1] - 20 && Math.abs(dex) <= this.themeTops[2] - 20){
         this.$refs.detailTops.currentIndex = 1;
-      }else if(Math.abs(dex) < this.$refs.goodList.$el.offsetTop && Math.abs(dex) > this.$refs.common.$el.offsetTop){
+      }else if(Math.abs(dex) <= this.themeTops[3] - 20 && Math.abs(dex) >= this.themeTops[2] - 20){
         this.$refs.detailTops.currentIndex = 2;
-      }else{
+      }else if(Math.abs(dex) > this.themeTops[3] - 20){
         this.$refs.detailTops.currentIndex = 3;
       }
-    }
+      }
     }
     
   }

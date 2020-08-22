@@ -28,7 +28,7 @@ export default {
       this.$emit('getDex',dex);
     },
     returns(){
-        this.$router.go(-1);
+      this.$router.go(-1);
     }
   }
 }
