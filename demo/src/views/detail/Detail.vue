@@ -28,6 +28,8 @@
     </scroll>
 
     <back-top v-if="isShows" @click.native="scrollTop" />
+
+    <detail-button-bar />
   </div>
 </template>
 
@@ -39,6 +41,7 @@
   import DetailGoodsInfo from './childDetail/DetailGoodsInfo'
   import DetailGoodParams from './childDetail/DetailGoodParams'
   import DetailCommon from './childDetail/DetailCommon'
+  import DetailButtonBar from './childDetail/DetailButtonBar'
   import BackTop from 'components/content/backTop/BackTop' 
   import GoodList from 'components/content/goods/GoodList'
   import GoodListItem from 'components/content/goods/GoodListItem'
@@ -61,7 +64,8 @@
                   DetailCommon,
                   BackTop,
                   GoodList,
-                  GoodListItem 
+                  GoodListItem,
+                  DetailButtonBar 
                 },
     mixins: [ itemListenerMixin ],
     data(){
@@ -153,7 +157,7 @@
     background: #fff;
   }
   .contain{
-    height: calc(100% - 44px);
+    height: calc(100% - 93px);
   }
   .zhanwei{
     margin: 5px auto 5px auto;
