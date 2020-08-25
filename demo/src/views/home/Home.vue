@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <nav-top class="home-nav"><div slot="center">购物车</div></nav-top>
+    <nav-top class="home-nav"><div slot="center">美装商城</div></nav-top>
     <tab-control :titles="['流行','新款','精选']" class="tab-control" @tabClick="tabClicks" ref="tabControl1" v-show="isTabFixed"></tab-control>
     <scroll
       ref="scroll"

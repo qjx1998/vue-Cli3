@@ -49,7 +49,7 @@ export default {
   .spanItem{
       display: inline-block;
       height: 35px;
-      color: var(--color-high-text);
-      border-bottom: 2px solid var(--color-high-text);
+      color: #fff;
+      border-bottom: 2px solid #fff;
   }
 </style>
