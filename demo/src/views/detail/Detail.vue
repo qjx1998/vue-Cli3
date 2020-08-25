@@ -29,7 +29,7 @@
 
     <back-top v-if="isShows" @click.native="scrollTop" />
 
-    <detail-button-bar />
+    <detail-button-bar @addCart="addCart" />
   </div>
 </template>
 
@@ -45,7 +45,6 @@
   import BackTop from 'components/content/backTop/BackTop' 
   import GoodList from 'components/content/goods/GoodList'
   import GoodListItem from 'components/content/goods/GoodListItem'
-
 
   import Scroll from 'components/common/scroll/Scroll'
 
@@ -143,6 +142,16 @@
       }else if(Math.abs(dex) > this.themeTops[3] - 20){
         this.$refs.detailTops.currentIndex = 3;
       }
+      },
+      addCart(){
+        const product = {};
+        product.image = this.detailSwipers[0];
+        product.title = this.detailMes.title;
+        product.desc = this.detailMes.desc;
+        product.price = this.detailMes.realPrice;
+        product.iid = this.iid;
+        console.log(product);
+        this.$store.dispatch('addCart',product);
       }
     }
     

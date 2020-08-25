@@ -1,19 +1,29 @@
 <template>
   <div class="home">
-    <h1>this is Home shopCart</h1>
+    <nav-top class="shopCart">
+      <div slot="center">购物车{{ shopNum }}</div>
+    </nav-top>
   </div>
 </template>
 
 <script>
+import NavTop from 'components/common/navbar/NavTop';
 
 export default {
-  name: 'Home',
+  name: 'ShopCart',
   components: {
-    
+    NavTop
+  },
+  data(){
+    return{
+      shopNum: '1'
+    }
   }
 }
 </script>
 
 <style scoped>
-
+  .shopCart{
+    background-color: #fff;
+  }
 </style>

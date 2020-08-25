@@ -1,5 +1,5 @@
 <template>
-  <div class="navtop">
+  <div class="navtop" :style="{ background: bg }">
     <div class="left"><slot name="left"></slot></div>
     <div class="center"><slot name="center"></slot></div>
     <div class="rigth"><slot name="rigth"></slot></div>
@@ -9,10 +9,13 @@
 <script>
 export default {
   name: 'NavTop',
-  data(){
-      return{
-
+  props: {
+    bg: {
+      type: String,
+      default(){
+        return 'var(--color-tint)'
       }
+    }
   }
 }
 </script>
